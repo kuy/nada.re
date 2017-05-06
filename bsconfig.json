@@ -1,0 +1,12 @@
+{
+  "name": "nada.re",
+  "reason": {},
+  "bs-dependencies": [
+    "reason-js"
+  ],
+  "bs-dev-dependencies": [
+  ],
+  "sources": [
+    "src"
+  ]
+}

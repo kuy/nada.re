@@ -70,6 +70,8 @@ module PixelView = {
   type t;
   external make: Dom.element => Point.t => t =
     "PixelView" [@@bs.module "obelisk.js"] [@@bs.new];
+
+  /* FIXME */
   external renderObjectBrick: t => Brick.t => Point3D.t => unit = "renderObject" [@@bs.send];
   external renderObjectCube: t => Cube.t => Point3D.t => unit = "renderObject" [@@bs.send];
   let renderObject view obj pos => 
@@ -77,5 +79,6 @@ module PixelView = {
       | `Brick o => renderObjectBrick view o pos
       | `Cube o => renderObjectCube view o pos
     };
+
   external clear: t => unit = "" [@@bs.send];
 };

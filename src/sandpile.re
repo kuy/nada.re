@@ -35,5 +35,11 @@ let incr (x, y) pile =>
 let decr (x, y) pile =>
   List.mapi (fun row line => List.mapi (fun col c => row == y && col == x ? c - 1 : c) line) pile;
 
+let size pile =>
+  switch pile {
+    | [] => (0, 0)
+    | [hd, ...tl] => (List.length hd, List.length pile)
+  };
+
 let to_array pile =>
   Array.of_list pile |> Array.map (fun lst => Array.of_list lst);

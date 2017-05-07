@@ -6,18 +6,23 @@ Js.log "Hello, Sandpile!";
 let canvas = Document.getElementById "stage" document;
 Js.log canvas;
 
+let pile = Sandpile.make (5, 5);
+Js.log (Sandpile.to_array pile);
+
+let pile2 = Sandpile.incr (4, 4) pile;
+Js.log (Sandpile.to_array pile2);
+
+Random.self_init ();
+Js.log (Random.int 10);
+Js.log (Random.int 10);
+
 switch canvas {
   | None => ()
   | Some el => {
     let base = Point.make 200 200;
     let view = PixelView.make el base;
 
-    let color = (SideColor.getByInnerColor (SideColor.make ()) ColorPattern._GRAY);
-    let dim = BrickDimension.make 160 160;
-    let brick = Brick.make dim color;
-
-    PixelView.renderObject view brick (Point3D.make 0 0 0);
-
+    Renderer.render view pile;
     ()
   }
 };

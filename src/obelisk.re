@@ -1,6 +1,13 @@
+type color;
+
 module ColorPattern = {
-  type t;
-  external _GRAY: t = "GRAY" [@@bs.scope "ColorPattern"] [@@bs.module "obelisk.js"] [@@bs.val];
+  external _WHITE: color = "WHITE" [@@bs.scope "ColorPattern"] [@@bs.module "obelisk.js"] [@@bs.val];
+  external _BLACK: color = "BLACK" [@@bs.scope "ColorPattern"] [@@bs.module "obelisk.js"] [@@bs.val];
+  external _GRAY: color = "GRAY" [@@bs.scope "ColorPattern"] [@@bs.module "obelisk.js"] [@@bs.val];
+  external _BLUE: color = "BLUE" [@@bs.scope "ColorPattern"] [@@bs.module "obelisk.js"] [@@bs.val];
+  external _RED: color = "RED" [@@bs.scope "ColorPattern"] [@@bs.module "obelisk.js"] [@@bs.val];
+  external _GREEN: color = "GREEN" [@@bs.scope "ColorPattern"] [@@bs.module "obelisk.js"] [@@bs.val];
+  external _YELLOW: color = "YELLOW" [@@bs.scope "ColorPattern"] [@@bs.module "obelisk.js"] [@@bs.val];
 };
 
 module SideColor = {
@@ -8,7 +15,14 @@ module SideColor = {
   /* FIXME: Incorrect signature */
   external make: unit => t =
     "SideColor" [@@bs.module "obelisk.js"] [@@bs.new];
-  external getByInnerColor: t => ColorPattern.t => t = "" [@@bs.send];
+  external getByInnerColor: t => color => t = "" [@@bs.send];
+};
+
+module CubeColor = {
+  type t;
+  external make: border::color? => borderHighlight::color? => left::color? => right::color? => horizontal::color? => unit => t =
+    "CubeColor" [@@bs.module "obelisk.js"] [@@bs.new];
+  external getByHorizontalColor: t => color => t = "" [@@bs.send];
 };
 
 module Point = {
@@ -40,10 +54,28 @@ module Brick = {
     "Brick" [@@bs.module "obelisk.js"] [@@bs.new];
 };
 
+module CubeDimension = {
+  type t;
+  external make: int => int => int => t =
+    "CubeDimension" [@@bs.module "obelisk.js"] [@@bs.new];
+};
+
+module Cube = {
+  type t;
+  external make: CubeDimension.t => CubeColor.t => bool => t =
+    "Cube" [@@bs.module "obelisk.js"] [@@bs.new];
+};
+
 module PixelView = {
   type t;
   external make: Dom.element => Point.t => t =
     "PixelView" [@@bs.module "obelisk.js"] [@@bs.new];
-  external renderObject: t => Brick.t => Point3D.t => unit = "" [@@bs.send];
+  external renderObjectBrick: t => Brick.t => Point3D.t => unit = "renderObject" [@@bs.send];
+  external renderObjectCube: t => Cube.t => Point3D.t => unit = "renderObject" [@@bs.send];
+  let renderObject view obj pos => 
+    switch obj {
+      | `Brick o => renderObjectBrick view o pos
+      | `Cube o => renderObjectCube view o pos
+    };
   external clear: t => unit = "" [@@bs.send];
 };

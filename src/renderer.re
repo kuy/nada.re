@@ -1,6 +1,7 @@
 open Obelisk;
 
 let size = 16;
+let max = 4;
 
 let clear view => {
   PixelView.clear view;
@@ -20,11 +21,25 @@ let render_stage pile view => {
 let scale x y z =>
   Point3D.make (size * x) (size * y) (size * z);
 
+let lighter base height => {
+  let ratio = (float_of_int height) /. (float_of_int max);
+
+  let r = (base lsr 16) land 0x0000FF;
+  let g = (base lsr 8) land 0x0000FF;
+  let b = base land 0x0000FF;
+
+  let nr = r + (int_of_float ((float_of_int (255 - r)) *. ratio));
+  let ng = g + (int_of_float ((float_of_int (255 - g)) *. ratio));
+  let nb = b + (int_of_float ((float_of_int (255 - b)) *. ratio));
+
+  (nr lsl 16) + (ng lsl 8) + nb
+};
+
 let render_stack h (x, y) view => {
   let rec render n =>
     switch n {
       | n when n < h => {
-        let color = (CubeColor.getByHorizontalColor (CubeColor.make ()) ColorPattern._BLUE);
+        let color = (CubeColor.getByHorizontalColor (CubeColor.make ()) (lighter ColorPattern._BLUE n));
         let dim = CubeDimension.make size size size;
         let cube = Cube.make dim color true;
 

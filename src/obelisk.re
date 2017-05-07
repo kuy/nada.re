@@ -1,12 +1,9 @@
-type color;
+type color = int;
 
 module ColorPattern = {
-  external _WHITE: color = "WHITE" [@@bs.scope "ColorPattern"] [@@bs.module "obelisk.js"] [@@bs.val];
   external _BLACK: color = "BLACK" [@@bs.scope "ColorPattern"] [@@bs.module "obelisk.js"] [@@bs.val];
   external _GRAY: color = "GRAY" [@@bs.scope "ColorPattern"] [@@bs.module "obelisk.js"] [@@bs.val];
   external _BLUE: color = "BLUE" [@@bs.scope "ColorPattern"] [@@bs.module "obelisk.js"] [@@bs.val];
-  external _RED: color = "RED" [@@bs.scope "ColorPattern"] [@@bs.module "obelisk.js"] [@@bs.val];
-  external _GREEN: color = "GREEN" [@@bs.scope "ColorPattern"] [@@bs.module "obelisk.js"] [@@bs.val];
   external _YELLOW: color = "YELLOW" [@@bs.scope "ColorPattern"] [@@bs.module "obelisk.js"] [@@bs.val];
 };
 

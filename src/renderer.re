@@ -22,7 +22,7 @@ let scale x y z =>
   Point3D.make (size * x) (size * y) (size * z);
 
 let lighter base height => {
-  let ratio = (float_of_int height) /. (float_of_int max);
+  let ratio = (float_of_int height) /. (float_of_int (max - 1));
 
   let r = (base lsr 16) land 0x0000FF;
   let g = (base lsr 8) land 0x0000FF;

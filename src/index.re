@@ -13,10 +13,12 @@ switch (Document.getElementById "stage" document) {
     let view = PixelView.make canvas base;
 
     let rec update pile => {
-      let next = Sandpile.incr (random_pos ()) pile;
+      let next = pile
+        |> Sandpile.avalanche
+        |> Sandpile.incr (random_pos ());
       Renderer.render view next;
 
-      Js.Global.setTimeout (fun () => update next) 500;
+      Js.Global.setTimeout (fun () => update next) 250;
       ()
     };
     update (Sandpile.make (size, size))

@@ -4,6 +4,12 @@
 
 [Avalanche](https://www.wikiwand.com/en/Avalanche) = [雪崩 (nadare)](https://www.wikiwand.com/ja/%E9%9B%AA%E5%B4%A9) in Japanese.
 
+### Demo
+
+[Try on Demo page](http://kuy.github.io/nada.re/).
+
+![nada.re](http://kuy.github.io/nada.re/assets/nadare.png)
+
 ### Development
 
 ```

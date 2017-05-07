@@ -1,8 +1,10 @@
 open ReasonJs.Dom;
 open Obelisk;
 
+let size = 10;
+
 Random.self_init ();
-let random_pos () => (Random.int 5, Random.int 5);
+let random_pos () => (Random.int size, Random.int size);
 
 switch (Document.getElementById "stage" document) {
   | None => ()
@@ -17,6 +19,6 @@ switch (Document.getElementById "stage" document) {
       Js.Global.setTimeout (fun () => update next) 500;
       ()
     };
-    update (Sandpile.make (5, 5))
+    update (Sandpile.make (size, size))
   }
 };

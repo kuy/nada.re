@@ -8,7 +8,7 @@
 
 [Try on Demo page](http://kuy.github.io/nada.re/).
 
-![nada.re](http://kuy.github.io/nada.re/assets/nadare.png)
+![nada.re](http://kuy.github.io/nada.re/assets/nadare.gif)
 
 ### Development
 

@@ -26,6 +26,12 @@ module ListX = {
 
 type t = list (list int);
 
+let size pile =>
+  switch pile {
+    | [] => (0, 0)
+    | [hd, ...tl] => (List.length hd, List.length pile)
+  };
+
 let make (w, h) =>
   (w * h)
   |> ListX.zero
@@ -37,7 +43,7 @@ let clear (x, y) pile =>
 let incr (x, y) pile =>
   List.mapi (fun row line => List.mapi (fun col c => row == y && col == x ? c + 1 : c) line) pile;
 
-let avalanche_cell (x, y) pile =>
+let flatten (x, y) pile =>
   pile
   |> clear (x, y)
   |> incr (x, y - 1)
@@ -45,19 +51,23 @@ let avalanche_cell (x, y) pile =>
   |> incr (x, y + 1)
   |> incr (x - 1, y);
 
-let avalanche pile => {
-  pile
-  |> List.mapi (fun row line => List.mapi (fun col c => c < 4 ? (false, (col, row)) : (true, (col, row))) line)
-  |> List.fold_left (fun acc line => List.append acc line) []
-  |> List.filter (fun (over, _) => over)
-  |> List.map (fun (_, pos) => pos)
-  |> List.fold_left (fun pl pos => avalanche_cell pos pl) pile
-};
+let flatten_all cells pile =>
+  List.fold_left (fun pl pos => flatten pos pl) pile cells;
 
-let size pile =>
-  switch pile {
-    | [] => (0, 0)
-    | [hd, ...tl] => (List.length hd, List.length pile)
+let unstables pile =>
+  pile
+  |> List.mapi (fun row line => List.mapi (fun col c => (c >= 4, (col, row))) line)
+  |> List.flatten
+  |> List.filter (fun (s, _) => s)
+  |> List.map (fun (_, pos) => pos);
+
+let random_cell (w, h) =>
+  (Random.int w, Random.int h);
+
+let rec drop ::n=1 pile =>
+  switch n {
+    | 0 => pile
+    | n => drop n::(n - 1) (incr (random_cell (size pile)) pile)
   };
 
 let to_array pile =>
